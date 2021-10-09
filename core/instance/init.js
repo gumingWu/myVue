@@ -7,5 +7,10 @@ export function initMixin(Vue) {
     vm.$options = options
 
     initState(vm)
+
+    // 如果存在el属性，则进行模板渲染
+    if(vm.$options.el) {
+      vm.$mount(vm.$options.el)
+    }
   }
 }

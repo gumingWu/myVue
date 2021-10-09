@@ -37,7 +37,7 @@ methodsToPath.forEach(method => {
     if(inserted) {
       ob.observeArray(inserted)
     }
-
+    // 这里触发视图更新
     return result
   }
 })
