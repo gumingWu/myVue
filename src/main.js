@@ -1,8 +1,10 @@
-import { isPlainObject } from "../core/utils";
+import { observe } from "../core/observer";
 
 let obj = {
   a: 1,
   b: 2,
 };
 
-console.log(isPlainObject(obj));
+let o = observe(obj);
+obj.a;
+obj.b = 22;
