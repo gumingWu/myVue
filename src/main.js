@@ -1,10 +1,7 @@
-import { observe } from "../core/observer";
+import { compileToFunctions } from "../core/compiler";
 
-let obj = {
-  a: 1,
-  b: 2,
-};
+const template = "<div><p>adsadsa</p></div>";
 
-let o = observe(obj);
-obj.a;
-obj.b = 22;
+const vnode = compileToFunctions(template);
+
+console.log(vnode);
