@@ -3,7 +3,6 @@ import { patch } from "../vdom/patch";
 export function lifecycleMixin(Vue) {
   Vue.prototype._update = function (vnode) {
     const vm = this;
-
     // patch是渲染vnode为真实dom的核心
     patch(vm.$el, vnode);
   };

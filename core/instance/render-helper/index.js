@@ -2,7 +2,7 @@ import Vnode from "../../vdom";
 
 export function installRenderHelpers(target) {
   target._c = createElement;
-  target._t = createTextNode;
+  target._v = createTextNode;
   target._s = toStringify;
 }
 

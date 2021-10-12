@@ -1,31 +1,38 @@
-import Vue from "../instance/index";
 import { parse } from "./parse";
 import { generate } from "./codegen";
 import { mountComponent } from "../instance/lifecycle";
 
 // 源码的位置在entry-runtime-with-compiler.js，和runtime-only版本做区分
-Vue.prototype.$mount = function (el) {
-  const vm = this;
-  const options = vm.$options;
-  el = document.querySelector(el);
+// 我自己的小改动，不知道怎么注入这个mount方法，所以就按照混入的方式注入方法
+export function mountMixin(Vue) {
+  Vue.prototype.$mount = function (el) {
+    const vm = this;
+    const options = vm.$options;
+    el = document.querySelector(el);
 
-  // 如果不存在render属性
-  if (!options.render) {
-    let template = options.template;
-
-    // 如果不存在render和template，但存在el，直接把模板赋值到el所在的外层html结构，就是el本身，不是父元素
-    if (!template && el) {
-      template = getOuterHTML;
+    // 我的改动，保证存在el
+    if (!el) {
+      el = document.createElement("div");
     }
 
-    if (template) {
-      const render = compileToFunctions(template);
-      options.render = render;
-    }
+    // 如果不存在render属性
+    if (!options.render) {
+      let template = options.template;
 
-    return mountComponent(vm, el);
-  }
-};
+      // 如果不存在render和template，但存在el，直接把模板赋值到el所在的外层html结构，就是el本身，不是父元素
+      if (!template && el) {
+        template = getOuterHTML;
+      }
+
+      if (template) {
+        const render = compileToFunctions(template);
+        options.render = render;
+      }
+
+      return mountComponent(vm, el);
+    }
+  };
+}
 
 function getOuterHTML(el) {
   if (el.outerHTML) {
