@@ -1,7 +1,13 @@
-import { compileToFunctions } from "../core/compiler";
+import Vue from "../core/instance";
 
-const template = "<div><p>adsadsa</p></div>";
+const options = {
+  data() {
+    return {
+      a: 1,
+      b: 2,
+    };
+  },
+};
 
-const vnode = compileToFunctions(template);
-
-console.log(vnode);
+const el = new Vue(options);
+console.log(el);
