@@ -1,3 +1,4 @@
+import Watcher from "../observer/watch";
 import { patch } from "../vdom/patch";
 
 export function lifecycleMixin(Vue) {
@@ -15,5 +16,10 @@ export function mountComponent(vm, el) {
   vm.$el = el;
 
   // _update和_render方法和_init方法一样都是定义在Vue原型上的方法
-  vm._update(vm._render());
+  // 引入watcher概念，这里注册一个渲染watcher，执行vm._update(vm._render())方法渲染视图
+  let updateComponent = () => {
+    console.log("刷新页面");
+    vm._update(vm._render());
+  };
+  new Watcher(vm, updateComponent, null, true);
 }
